@@ -65,6 +65,10 @@ Panel {
     if (!openAlbum && shown[i]) nd.setSelected(shown[i].id, !!nd.excluded[shown[i].id])
   }
 
+  function toggleCurrentAlbum() {
+    if (song) nd.setSelected(song.albumId, !!nd.excluded[song.albumId])
+  }
+
   function move(d) { cursor = Math.max(0, Math.min(rows.length - 1, cursor + d)) }
 
   function connect() { nd.login(serverField.text, userField.text, passField.text) }
@@ -122,6 +126,7 @@ Panel {
         else if (t === "n") root.nd.next()
         else if (t === "b") root.nd.previous()
         else if (t === "r") root.nd.loadAlbums()
+        else if (t === "x") root.toggleCurrentAlbum()
         else e.accepted = false
       }
 
@@ -222,6 +227,14 @@ Panel {
             }
           }
 
+          PanelActionButton {
+            readonly property bool inShuffle: !!root.song && !root.nd.excluded[root.song.albumId]
+            iconText: String.fromCodePoint(inShuffle ? 0xF0132 : 0xF0131)
+            tooltipText: inShuffle ? "Remove this album from shuffle  ( x )" : "Add this album back to shuffle  ( x )"
+            foreground: root.foreground
+            enabled: !!root.song
+            onClicked: root.toggleCurrentAlbum()
+          }
           PanelActionButton {
             iconText: String.fromCodePoint(0xF04AE)
             foreground: root.foreground

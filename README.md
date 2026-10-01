@@ -40,6 +40,7 @@ rm ~/.config/omarchy/navidrome.json   # saved server, token and album selection
 | `/` | search |
 | `s` | shuffle checked albums |
 | `p` / `n` / `b` | pause / next / previous |
+| `x` | check or uncheck the playing song's album |
 | `r` | reload library |
 
 Middle-click the bar icon to pause.
