@@ -145,7 +145,7 @@ Panel {
           foreground: root.foreground
           fontFamily: root.fontFamily
           iconComponent: Component {
-            Text { text: root.glyph; color: root.foreground; font.family: root.fontFamily; font.pixelSize: Style.font.display }
+            Text { textFormat: Text.PlainText; text: root.glyph; color: root.foreground; font.family: root.fontFamily; font.pixelSize: Style.font.display }
           }
         }
 
@@ -209,6 +209,7 @@ Panel {
             Layout.fillWidth: true
             spacing: Style.space(2)
             Text {
+              textFormat: Text.PlainText
               Layout.fillWidth: true
               text: root.song ? root.song.title : (root.nd && root.nd.error ? root.nd.error : "Nothing playing")
               color: root.foreground
@@ -218,6 +219,7 @@ Panel {
               elide: Text.ElideRight
             }
             Text {
+              textFormat: Text.PlainText
               Layout.fillWidth: true
               text: root.song ? root.song.artist + " · " + root.song.album : "Pick an album, or shuffle your selection"
               color: root.dim
@@ -259,7 +261,7 @@ Panel {
           Layout.fillWidth: true
           visible: !!root.song
           spacing: Style.space(8)
-          Text { text: root.clock(root.nd ? root.nd.position : 0); color: root.dim; font.family: root.fontFamily; font.pixelSize: Style.font.caption }
+          Text { textFormat: Text.PlainText; text: root.clock(root.nd ? root.nd.position : 0); color: root.dim; font.family: root.fontFamily; font.pixelSize: Style.font.caption }
           PanelSlider {
             Layout.fillWidth: true
             bar: root.bar
@@ -269,7 +271,7 @@ Panel {
             value: root.nd ? root.nd.position : 0
             onReleased: function(v) { root.nd.seek(v) }
           }
-          Text { text: root.clock(root.nd ? root.nd.duration : 0); color: root.dim; font.family: root.fontFamily; font.pixelSize: Style.font.caption }
+          Text { textFormat: Text.PlainText; text: root.clock(root.nd ? root.nd.duration : 0); color: root.dim; font.family: root.fontFamily; font.pixelSize: Style.font.caption }
         }
 
         PanelSeparator { Layout.fillWidth: true; foreground: root.foreground }
@@ -308,6 +310,7 @@ Panel {
           spacing: Style.space(6)
 
           Text {
+            textFormat: Text.PlainText
             Layout.fillWidth: true
             readonly property int total: root.nd ? root.nd.albums.length : 0
             text: root.nd && root.nd.loading ? "Loading library…"
@@ -342,6 +345,7 @@ Panel {
             Layout.fillWidth: true
             spacing: 0
             Text {
+              textFormat: Text.PlainText
               Layout.fillWidth: true
               text: root.openAlbum ? root.openAlbum.name : ""
               color: root.foreground
@@ -351,6 +355,7 @@ Panel {
               elide: Text.ElideRight
             }
             Text {
+              textFormat: Text.PlainText
               Layout.fillWidth: true
               text: root.openAlbum ? root.openAlbum.artist + (root.openAlbum.year ? " · " + root.openAlbum.year : "") : ""
               color: root.dim
@@ -408,6 +413,7 @@ Panel {
               spacing: Style.space(10)
 
               Text {
+                textFormat: Text.PlainText
                 Layout.preferredWidth: Style.space(20)
                 horizontalAlignment: Text.AlignHCenter
                 text: row.isAlbum ? String.fromCodePoint(row.checked ? 0xF0132 : 0xF0131) : (row.modelData.track || row.index + 1)
@@ -434,6 +440,7 @@ Panel {
                 Layout.fillWidth: true
                 spacing: 0
                 Text {
+                  textFormat: Text.PlainText
                   Layout.fillWidth: true
                   text: row.isAlbum ? row.modelData.name : row.modelData.title
                   color: root.foreground
@@ -443,6 +450,7 @@ Panel {
                   elide: Text.ElideRight
                 }
                 Text {
+                  textFormat: Text.PlainText
                   Layout.fillWidth: true
                   text: row.modelData.artist + (row.isAlbum && row.modelData.year ? " · " + row.modelData.year : "")
                   color: root.dim
@@ -453,6 +461,7 @@ Panel {
               }
 
               Text {
+                textFormat: Text.PlainText
                 text: row.isAlbum ? row.modelData.songCount : root.clock(row.modelData.duration)
                 color: root.dim
                 font.family: root.fontFamily
@@ -475,6 +484,7 @@ Panel {
     clip: true
 
     Text {
+      textFormat: Text.PlainText
       anchors.centerIn: parent
       visible: img.status !== Image.Ready
       text: root.glyph
