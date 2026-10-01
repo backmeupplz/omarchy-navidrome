@@ -11,7 +11,7 @@ Navidrome (or any Subsonic server) in the Omarchy bar. Browse albums, play an al
 
 ## Requirements
 
-- `mpv` (plays audio; `omarchy pkg add mpv` if missing)
+- `mpv` (plays audio; preinstalled on Omarchy)
 - `mpv-mpris` (optional, ships with Omarchy) for media keys and the media widget
 
 ## Install
