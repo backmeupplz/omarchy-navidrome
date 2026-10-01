@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "backmeupplz.navidrome",
   "name": "Navidrome",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "backmeupplz",
   "license": "MIT",
   "description": "Browse and play your Navidrome (or any Subsonic) library from the bar, with shuffle over hand-picked albums.",
