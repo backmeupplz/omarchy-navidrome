@@ -66,7 +66,7 @@ Panel {
   }
 
   function toggleCurrentAlbum() {
-    if (song) nd.setSelected(song.albumId, !!nd.excluded[song.albumId])
+    if (song && song.albumId) nd.setSelected(song.albumId, !!nd.excluded[song.albumId])
   }
 
   function move(d) { cursor = Math.max(0, Math.min(rows.length - 1, cursor + d)) }
@@ -122,6 +122,7 @@ Panel {
         else if (e.key === Qt.Key_Tab || e.key === Qt.Key_Backtab) root.switchPanel(e.key === Qt.Key_Backtab ? -1 : 1)
         else if (t === "/" && !root.openAlbum) search.forceActiveFocus()
         else if (t === "s") root.nd.startShuffle()
+        else if (t === "f") root.nd.startLofi(root.nd.lofiVibe)
         else if (t === "p") root.nd.togglePause()
         else if (t === "n") root.nd.next()
         else if (t === "b") root.nd.previous()
@@ -221,7 +222,8 @@ Panel {
             Text {
               textFormat: Text.PlainText
               Layout.fillWidth: true
-              text: root.song ? root.song.artist + " · " + root.song.album : "Pick an album, or shuffle your selection"
+              text: root.song ? root.song.artist + " · " + root.song.album
+                : root.nd && root.nd.rendering ? "Rendering lo-fi…" : "Pick an album, shuffle your selection, or play lo-fi"
               color: root.dim
               font.family: root.fontFamily
               font.pixelSize: Style.font.caption
@@ -234,7 +236,7 @@ Panel {
             iconText: String.fromCodePoint(inShuffle ? 0xF0132 : 0xF0131)
             tooltipText: inShuffle ? "Remove this album from shuffle  ( x )" : "Add this album back to shuffle  ( x )"
             foreground: root.foreground
-            enabled: !!root.song
+            enabled: !!root.song && !!root.song.albumId
             onClicked: root.toggleCurrentAlbum()
           }
           PanelActionButton {
@@ -307,6 +309,31 @@ Panel {
         RowLayout {
           Layout.fillWidth: true
           visible: !root.openAlbum
+          spacing: Style.space(8)
+
+          Text {
+            textFormat: Text.PlainText
+            Layout.fillWidth: true
+            text: root.nd && root.nd.rendering ? "Lo-fi…" : "Lo-fi"
+            color: root.dim
+            font.family: root.fontFamily
+            font.pixelSize: Style.font.caption
+          }
+          ButtonGroup {
+            options: root.nd ? root.nd.vibes : []
+            value: root.nd ? root.nd.lofi : ""
+            focusable: false
+            spacing: Style.space(4)
+            foreground: root.foreground
+            fontFamily: root.fontFamily
+            fontSize: Style.font.caption
+            onChanged: function(v) { root.nd.startLofi(v) }
+          }
+        }
+
+        RowLayout {
+          Layout.fillWidth: true
+          visible: !root.openAlbum
           spacing: Style.space(6)
 
           Text {
@@ -315,6 +342,7 @@ Panel {
             readonly property int total: root.nd ? root.nd.albums.length : 0
             text: root.nd && root.nd.loading ? "Loading library…"
               : Math.max(0, total - root.nd.excludedCount).toLocaleString(Qt.locale(), "f", 0) + " of " + total.toLocaleString(Qt.locale(), "f", 0) + " albums in shuffle"
+                + (root.nd.playlistId ? " · playlist \u201c" + root.nd.playlistName + "\u201d" : "")
             color: root.dim
             font.family: root.fontFamily
             font.pixelSize: Style.font.caption
