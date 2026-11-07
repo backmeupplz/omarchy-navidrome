@@ -41,11 +41,13 @@ Item {
   property bool picking: false
 
   // Lo-fi: tracks rendered locally by lofi/lofi (Rust), one ahead, played through the same mpv queue.
+  // lofi/cover.png is linked beside the WAVs so mpv-mpris finds it (cover-art-auto) for the media widget.
   readonly property var vibes: [
     { value: "chill", label: "Chill" }, { value: "rainy", label: "Rainy" }, { value: "sunny", label: "Sunny" },
     { value: "late", label: "Late" }, { value: "jazz", label: "Jazz" }, { value: "study", label: "Study" }
   ]
   readonly property string lofiBin: decodeURIComponent(Qt.resolvedUrl("lofi/lofi").toString().replace(/^file:\/\//, ""))
+  readonly property string lofiCover: Qt.resolvedUrl("lofi/cover.png").toString()
   readonly property string lofiDir: (Quickshell.env("XDG_CACHE_HOME") || Quickshell.env("HOME") + "/.cache") + "/omarchy-navidrome"
   property string lofi: ""          // vibe playing; "" when playing the library
   property string lofiVibe: "chill" // last vibe picked, saved
@@ -75,6 +77,7 @@ Item {
   function url(method, params) { return server + "/rest/" + method + "?" + query(params) }
 
   function coverUrl(id, size) {
+    if (id.indexOf("file:") === 0) return id
     return id && configured ? url("getCoverArt", { id: id, size: size }) : ""
   }
 
@@ -354,7 +357,7 @@ Item {
     if (!lofi || renderer.running) return
     var seed = Math.floor(Math.random() * 4294967296)
     renderer.file = lofiDir + "/" + seed + ".wav"
-    renderer.command = ["sh", "-c", 'mkdir -p "$1" && { ls -t "$1"/*.wav 2>/dev/null | tail -n +4 | xargs -r rm -f; } && exec "$2" "$3" "$4" "$5"',
+    renderer.command = ["sh", "-c", 'mkdir -p "$1" && ln -sf "${2%/*}/cover.png" "$1/cover.png" && { ls -t "$1"/*.wav 2>/dev/null | tail -n +4 | xargs -r rm -f; } && exec "$2" "$3" "$4" "$5"',
       "sh", lofiDir, lofiBin, lofi, String(seed), renderer.file]
     renderer.running = true
   }
@@ -363,7 +366,7 @@ Item {
     if (!r) { error = "Lo-fi: " + (renderErr.text.trim() || "render failed"); lofiStart = false; return }
     if (!lofi) return
     if (r.vibe !== lofi) return renderLofi()
-    var song = { id: "lofi-" + file, path: file, title: r.name, artist: "Lo-fi · " + r.label, album: r.bpm + " BPM", albumId: "", coverArt: "", duration: r.duration, vibe: r.vibe }
+    var song = { id: "lofi-" + file, path: file, title: r.name, artist: "Lo-fi · " + r.label, album: r.bpm + " BPM", albumId: "", coverArt: lofiCover, duration: r.duration, vibe: r.vibe }
     if (lofiStart) {
       var vibe = lofi
       play([song], 0, false)

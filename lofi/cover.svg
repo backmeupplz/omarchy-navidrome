@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b1640"/>
+      <stop offset="0.45" stop-color="#5a2a6e"/>
+      <stop offset="0.75" stop-color="#d4587a"/>
+      <stop offset="1" stop-color="#f6a571"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe29a"/>
+      <stop offset="1" stop-color="#ff7a6b"/>
+    </linearGradient>
+    <linearGradient id="room" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a1d3a"/>
+      <stop offset="1" stop-color="#140e1f"/>
+    </linearGradient>
+    <mask id="stripes">
+      <rect width="512" height="512" fill="#fff"/>
+      <rect x="0" y="232" width="512" height="5" fill="#000"/>
+      <rect x="0" y="250" width="512" height="7" fill="#000"/>
+      <rect x="0" y="270" width="512" height="9" fill="#000"/>
+      <rect x="0" y="292" width="512" height="11" fill="#000"/>
+    </mask>
+    <clipPath id="pane"><rect x="64" y="56" width="384" height="300"/></clipPath>
+  </defs>
+
+  <!-- room -->
+  <rect width="512" height="512" fill="url(#room)"/>
+
+  <!-- view through the window -->
+  <g clip-path="url(#pane)">
+    <rect x="64" y="56" width="384" height="300" fill="url(#sky)"/>
+    <g fill="#ffe9c9" opacity="0.85">
+      <circle cx="110" cy="92" r="1.6"/><circle cx="170" cy="74" r="1.2"/><circle cx="228" cy="104" r="1.4"/>
+      <circle cx="318" cy="80" r="1.8"/><circle cx="388" cy="110" r="1.3"/><circle cx="420" cy="72" r="1.1"/>
+      <circle cx="140" cy="140" r="1"/><circle cx="360" cy="146" r="1.1"/>
+    </g>
+    <circle cx="256" cy="262" r="96" fill="url(#sun)" mask="url(#stripes)"/>
+    <!-- far hills -->
+    <path d="M64 300 Q140 262 210 290 T350 282 T448 292 V356 H64Z" fill="#7a3a6e"/>
+    <!-- city skyline -->
+    <path d="M64 356 V318 H92 V300 H118 V322 H140 V286 H170 V312 H188 V296 H214 V326 H236 V304 H262 V280 H282 V262 H296 V280 H312 V318 H336 V294 H366 V310 H384 V288 H410 V316 H430 V302 H448 V356Z" fill="#2b1838"/>
+    <g fill="#ffd27a">
+      <rect x="148" y="294" width="4" height="5"/><rect x="158" y="304" width="4" height="5"/>
+      <rect x="268" y="290" width="4" height="5"/><rect x="286" y="272" width="3" height="4"/>
+      <rect x="276" y="306" width="4" height="5"/><rect x="342" y="302" width="4" height="5"/>
+      <rect x="392" y="296" width="4" height="5"/><rect x="100" y="310" width="4" height="5"/>
+      <rect x="196" y="304" width="4" height="5"/><rect x="354" y="314" width="4" height="5"/>
+    </g>
+    <!-- rain -->
+    <g stroke="#cfd8ff" stroke-width="1.5" stroke-linecap="round" opacity="0.35">
+      <path d="M96 70 l-6 22M150 120 l-6 22M204 64 l-6 22M262 140 l-6 22M318 100 l-6 22M376 60 l-6 22M424 130 l-6 22"/>
+      <path d="M122 200 l-6 22M236 190 l-6 22M352 210 l-6 22M410 230 l-6 22M180 236 l-6 22"/>
+    </g>
+  </g>
+
+  <!-- window frame -->
+  <g fill="none" stroke="#3d2c52" stroke-width="12">
+    <rect x="58" y="50" width="396" height="312" rx="4"/>
+    <path d="M256 50 V362 M58 206 H454"/>
+  </g>
+
+  <!-- sill -->
+  <rect x="36" y="362" width="440" height="22" rx="4" fill="#4a3561"/>
+  <rect x="36" y="380" width="440" height="6" fill="#2e2140"/>
+
+  <!-- plant -->
+  <path d="M112 362 h44 l-6 -38 h-32z" fill="#c8735a"/>
+  <rect x="114" y="320" width="40" height="8" rx="2" fill="#a85d48"/>
+  <g fill="#6fbf8e">
+    <path d="M134 320 C110 300 96 272 100 250 C120 268 132 292 134 320Z"/>
+    <path d="M134 320 C150 292 170 280 186 278 C178 300 160 314 134 320Z"/>
+    <path d="M134 320 C130 290 136 262 150 246 C156 272 148 300 134 320Z" fill="#8fd6a6"/>
+  </g>
+
+  <!-- mug + steam -->
+  <path d="M350 362 V316 H396 V362Z" fill="#f2e3d0"/>
+  <rect x="350" y="316" width="46" height="8" fill="#e6d2bb"/>
+  <path d="M396 326 h8 a12 12 0 0 1 0 24 h-8" fill="none" stroke="#f2e3d0" stroke-width="6"/>
+  <g fill="none" stroke="#f2e3d0" stroke-width="4" stroke-linecap="round" opacity="0.6">
+    <path d="M364 304 c-8 -10 8 -18 0 -30"/>
+    <path d="M382 300 c-8 -10 8 -18 0 -30"/>
+  </g>
+
+  <!-- desk -->
+  <rect x="0" y="386" width="512" height="126" fill="#1a1226"/>
+  <!-- headphones resting on the desk -->
+  <g fill="none" stroke="#e46a86" stroke-width="10" stroke-linecap="round">
+    <path d="M190 470 C190 410 322 410 322 470"/>
+  </g>
+  <rect x="172" y="452" width="30" height="40" rx="12" fill="#e46a86"/>
+  <rect x="310" y="452" width="30" height="40" rx="12" fill="#e46a86"/>
+</svg>
