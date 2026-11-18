@@ -299,7 +299,7 @@ Item {
 
   // --- playback ------------------------------------------------------------
 
-  function streamUrl(song) { return song.path || url("stream", { id: song.id }) }
+  function streamUrl(song) { return song.file || url("stream", { id: song.id }) }
 
   function mpv(args) {
     if (!ipc.connected) return
@@ -334,7 +334,7 @@ Item {
     if (!current) return
     recent = recent.concat([current.id]).slice(-recentLimit())
     // ponytail: scrobbles at track start; move to the halfway mark if play counts matter.
-    if (!current.path) api("scrobble", { id: current.id, submission: true }, function() {})
+    if (!current.file) api("scrobble", { id: current.id, submission: true }, function() {})
     if (shuffle && index === queue.length - 1) appendRandom()
     if (lofi && index === queue.length - 1) renderLofi()
   }
@@ -366,7 +366,7 @@ Item {
     if (!r) { error = "Lo-fi: " + (renderErr.text.trim() || "render failed"); lofiStart = false; return }
     if (!lofi) return
     if (r.vibe !== lofi) return renderLofi()
-    var song = { id: "lofi-" + file, path: file, title: r.name, artist: "Lo-fi · " + r.label, album: r.bpm + " BPM", albumId: "", coverArt: lofiCover, duration: r.duration, vibe: r.vibe }
+    var song = { id: "lofi-" + file, file: file, title: r.name, artist: "Lo-fi · " + r.label, album: r.bpm + " BPM", albumId: "", coverArt: lofiCover, duration: r.duration, vibe: r.vibe }
     if (lofiStart) {
       var vibe = lofi
       play([song], 0, false)
@@ -375,7 +375,7 @@ Item {
       return renderLofi()
     }
     queue = queue.concat([song])
-    mpv(["loadfile", song.path, "append-play"])
+    mpv(["loadfile", song.file, "append-play"])
   }
 
   // The binary prints the track as JSON only after the WAV is written. The result is handled once the process
